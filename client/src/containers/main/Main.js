@@ -14,11 +14,15 @@ function Main() {
     // CommandWindow
     const [queryHistory, setQueryHistory] = useState([]);  // history of submitted queries
     const [query, setQuery] = useState("");  // query shown in input element
+    // VariableStorage
+    const [variables, setVariables] = useState([]);  // an array of variables where each item is an object of variable (name, value, type)
     /* handlers */
     // CommandWindow
     const handleKeyUpQuery = (e) => {
         if (e.keyCode !== 13) return;
-        // if enter was pressed, compute result
+        // if enter was pressed, clear input
+        setQuery("");
+        // compute result
         const result = compute(query);
         // add query to history
         const newItem = {
@@ -34,7 +38,10 @@ function Main() {
             <Header />
             <FileExplorer />
             <Editor />
-            <VariableStorage />
+            <VariableStorage
+                variables={variables}
+                setVariables={setVariables}
+            />
             <CommandWindow
                 queryHistory={queryHistory}
                 setQueryHistory={setQueryHistory}

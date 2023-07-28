@@ -3,6 +3,24 @@
     grid-column-end: 4;
     grid-row-start: 2;
     grid-row-end: 3;
+    font-size: 80%;
+    overflow-y: scroll;
     /* testing */
     border: 1px dashed blue;
+}
+
+.variable-storage-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.variable-storage-table th, td {
+    border: 1px solid black;
+}
+
+.variable-storage-cell-value {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 1px;
 }
