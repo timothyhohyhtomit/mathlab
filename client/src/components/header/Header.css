@@ -1,0 +1,8 @@
+.header {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    /* testing */
+    border: 1px dashed red;
+}
