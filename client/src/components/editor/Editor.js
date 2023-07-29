@@ -4,7 +4,9 @@ import "./Editor.css";
 
 function Editor() {
     return (
-        <div className="editor"></div>
+        <div className="editor">
+            <div className="test">01234</div>
+        </div>
     );
 }
 

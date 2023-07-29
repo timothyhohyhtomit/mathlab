@@ -17,30 +17,33 @@ function VariableStorage({variables, setVariables}) {
         const value = generateRandomInt(100) / generateRandomInt(100);
         const newVar = {
             name,
-            value,
-            type: "double"
+            value
         };
         setVariables((prev) => [...prev, newVar]);
     }
     return (
         <div className="variable-storage">
-            <button onClick={handleAddNew}>Add New</button>
-            <table className="variable-storage-table">
-                <tr>
-                    <th width="20%">Name</th>
-                    <th width="70%">Value</th>
-                    <th width="10%">Type</th>
-                </tr>
-                {
-                    variables.map((variable) => (
+            <div className="variable-storage-title">Variable Storage</div>
+            <div className="variable-storage-table">
+                <table>
+                    <thead>
                         <tr>
-                            <td>{variable.name}</td>
-                            <td className="variable-storage-cell-value">{variable.value}</td>
-                            <td>{variable.type}</td>
+                            <th width="25%">Name</th>
+                            <th width="75%">Value</th>
                         </tr>
-                    ))
-                }
-            </table>
+                    </thead>
+                    <tbody>
+                    {
+                        Object.entries(variables).map((variable) => (
+                            <tr>
+                                <td>{variable[0]}</td>
+                                <td className="variable-storage-cell-value">{variable[1]}</td>
+                            </tr>
+                        ))
+                    }
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

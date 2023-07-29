@@ -15,7 +15,7 @@ function Main() {
     const [queryHistory, setQueryHistory] = useState([]);  // history of submitted queries
     const [query, setQuery] = useState("");  // query shown in input element
     // VariableStorage
-    const [variables, setVariables] = useState([]);  // an array of variables where each item is an object of variable (name, value, type)
+    const [variables, setVariables] = useState({});  // an object of variables where key is variable name and value is variable value
     /* handlers */
     // CommandWindow
     const handleKeyUpQuery = (e) => {
@@ -23,7 +23,7 @@ function Main() {
         // if enter was pressed, clear input
         setQuery("");
         // compute result
-        const result = compute(query);
+        const result = compute(query, variables);
         // add query to history
         const newItem = {
             query,
@@ -31,6 +31,13 @@ function Main() {
         };
         setQueryHistory((prev) => {
             return [...prev, newItem];
+        });
+        // update variable value
+        setVariables((prev) => {
+            return {
+                ...prev,
+                [result.variable]: result.value
+            };
         });
     }
     return (

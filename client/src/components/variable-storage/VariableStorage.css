@@ -3,19 +3,39 @@
     grid-column-end: 4;
     grid-row-start: 2;
     grid-row-end: 3;
+    display: flex;
+    flex-direction: column;
     font-size: 80%;
-    overflow-y: scroll;
-    /* testing */
-    border: 1px dashed blue;
+    border: 1px solid black;
+}
+
+.variable-storage-title {
+    width: 100%;
+    background-color: #ccc;
+    margin: 0;
 }
 
 .variable-storage-table {
-    width: 100%;
-    border-collapse: collapse;
+    height: 100%;
+    overflow-y: scroll;
 }
 
-.variable-storage-table th, td {
+.variable-storage-table table {
+    width: 100%;
+    border-collapse: collapse;
     border: 1px solid black;
+    font-size: 90%;
+}
+
+.variable-storage-table table thead tr th {
+    position: sticky;
+    top: 0;
+    background-color: #ddd;
+}
+
+.variable-storage-table td {
+    border: 1px solid black;
+    padding: 3px;
 }
 
 .variable-storage-cell-value {
