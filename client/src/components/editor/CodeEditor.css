@@ -1,0 +1,55 @@
+.editor {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* testing */
+    border: 1px dashed green;
+}
+
+.editor-tabs {
+    width: 100%;
+    height: 10%;
+    font-size: 80%;
+    display: flex;
+    overflow-x: scroll;
+}
+
+.editor-file {
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+}
+
+.editor-file-editor {
+    font-family: "Fira code", "Fira Mono", monospace;
+    font-size: 90%;
+    outline: 0;
+    counter-reset: line;
+    border: 1px solid #ced4da;
+}
+
+.editor-file-editor pre {
+    padding-left: 60px !important;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.editor-file-line-number {
+    position: absolute;
+    left: 0px;
+    color: #ccc;
+    text-align: right;
+    width: 40px;
+    font-weight: 100;
+}
+
+#editor-file-code {
+    outline: none;
+    padding-left: 60px !important;
+}
