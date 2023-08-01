@@ -2,9 +2,12 @@ import React from "react";
 
 import "./Header.css";
 
-function Header() {
+function Header({ handleRunCurrentLine, handleRunAllLines }) {
     return (
-        <div className="header"></div>
+        <div className="header">
+            <button onClick={handleRunCurrentLine}>Run current line</button>
+            <button onClick={handleRunAllLines}>Run all lines</button>
+        </div>
     );
 }
 

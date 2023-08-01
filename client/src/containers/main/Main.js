@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Header from "../../components/header/Header";
 import FileExplorer from "../../components/file-explorer/FileExplorer";
@@ -19,30 +19,52 @@ function Main() {
     // CodeEditor
     const [openFiles, setOpenFiles] = useState([]);  // an array of open files objects
     const [untitledTabCount, setUntitledTabCount] = useState(0);
-    const [currFile, setCurrFile] = useState(null);
+    const [currFile, setCurrFile] = useState(null);  // current code file
+    const [currLine, setCurrLine] = useState("");  // current line of code
+    /* helper functions */
+    const handleQueries = (queries) => {
+        // make a copy of variables
+        let variablesCopy = { ...variables };
+        // for each query, compute, update query history and update copy of variables
+        queries.forEach((query) => {
+            const trimmedQuery = query.trim();
+            if (trimmedQuery === "") return;
+            if (trimmedQuery === "clear" || trimmedQuery === "clear all") {
+                variablesCopy = {};
+                setQueryHistory((prev) => [...prev, { query: trimmedQuery }]);
+                return;
+            } else if (trimmedQuery.startsWith("clear ")) {
+                const clearedVars = trimmedQuery.substring(6).split(" ");
+                clearedVars.forEach((ele) => delete variablesCopy[ele]);
+                setQueryHistory((prev) => [...prev, { query: trimmedQuery }]);
+                return;
+            }
+            const result = compute(query, variablesCopy);
+            const newItem = {
+                query,
+                result
+            };
+            setQueryHistory((prev) => [...prev, newItem]);
+            variablesCopy[result.variable] = result.value
+        });
+        // update variable value
+        setVariables(variablesCopy);
+    };
     /* handlers */
+    // Header
+    const handleRunCurrentLine = (e) => {
+        handleQueries([currLine]);
+    };
+    const handleRunAllLines = (e) => {
+        const lines = currFile.code.split("\n");
+        handleQueries(lines);
+    };
     // CommandWindow
     const handleKeyUpQuery = (e) => {
         if (e.keyCode !== 13) return;
         // if enter was pressed, clear input
         setQuery("");
-        // compute result
-        const result = compute(query, variables);
-        // add query to history
-        const newItem = {
-            query,
-            result
-        };
-        setQueryHistory((prev) => {
-            return [...prev, newItem];
-        });
-        // update variable value
-        setVariables((prev) => {
-            return {
-                ...prev,
-                [result.variable]: result.value
-            };
-        });
+        handleQueries([query]);
     };
     // CodeEditor
     // createTab() creates a new file from scratch and adds it to the array of open files.
@@ -84,11 +106,15 @@ function Main() {
     }, []);
     return (
         <div className="main">
-            <Header />
+            <Header
+                handleRunCurrentLine={handleRunCurrentLine}
+                handleRunAllLines={handleRunAllLines}
+            />
             <FileExplorer />
             <CodeEditor
                 openFiles={openFiles}
                 currFile={currFile}
+                setCurrLine={setCurrLine}
                 createTab={createTab}
                 closeTab={closeTab}
                 handleCurrFileCodeChange={handleCurrFileCodeChange}

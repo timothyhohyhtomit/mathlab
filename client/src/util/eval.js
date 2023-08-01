@@ -1,7 +1,8 @@
 /*
 eval.js provides helper functions for computing numerical result from a query in string format.
 */
-import { polynomial, roots, evaluate } from "mathjs";
+import { create, all, evaluate, parse } from "mathjs";
+const math = create(all);
 
 /*
 compute function computes the numerical result of a query as a string.
@@ -15,11 +16,11 @@ export const compute = (query, scope) => {
     if (splitEquality.length === 1) {
         return {
             variable: "ans",
-            value: evaluate(splitEquality[0], scope)
+            value: math.evaluate(splitEquality[0], scope)
         };
     } else if (splitEquality.length === 2) {
         const variable = splitEquality[0];
-        const value = evaluate(splitEquality[1], scope);
+        const value = parseFloat(math.evaluate(splitEquality[1], scope).toFixed(5));
         return {
             variable,
             value

@@ -12,7 +12,10 @@ function CommandWindow({queryHistory, setQueryHistory, query, setQuery, handleKe
                         {
                             queryHistory.map((item) => (
                                 <>
-                                    <li className="command-window-history-item">{item.query}<br />{item.result.variable + " = " + item.result.value}</li>
+                                    { item.result ?
+                                        <li className="command-window-history-item">{item.query}<br />{item.result.variable + " = " + item.result.value}</li> :
+                                        <li className="command-window-history-item">{item.query}</li>
+                                    }
                                 </>
                             ))
                         }
